@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "150829170544",
+    "project_id": "fir-for-practice-a7285",
+    "storage_bucket": "fir-for-practice-a7285.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150829170544:android:b0b99bade8496e853cd9b5",
+        "android_client_info": {
+          "package_name": "com.pal.newsroom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxbTfDZUZQQJbeeb6z6EcBAVFHyto2LUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
