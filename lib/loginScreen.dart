@@ -6,9 +6,7 @@ import 'package:newsroom/registrationScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
- // Replace with the actual import for your NewsRoom page
 
-// Providers for managing state
 final emailProvider = StateProvider<String>((ref) => '');
 final passwordProvider = StateProvider<String>((ref) => '');
 final formErrorProvider = StateProvider<String?>((ref) => null);
@@ -24,11 +22,14 @@ class LoginPage extends ConsumerWidget {
     final password = ref.watch(passwordProvider);
     final formError = ref.watch(formErrorProvider);
     final isPasswordVisible = ref.watch(passwordVisibilityProvider);
+    final isLoading = ref.watch(loadingProvider);
+
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.only(bottom: 80.h, right: 30.r, left: 30.r),
+          padding:  EdgeInsets.symmetric(horizontal: 40.w,vertical: 150.h),
           child: Form(
             key: _formKey,
             child: Column(
@@ -37,8 +38,10 @@ class LoginPage extends ConsumerWidget {
                 const Image(image: AssetImage("assets/images/logo.png")),
                 SizedBox(height: 50.h),
                 TextFormField(
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: 'Email',
+                    hintStyle: TextStyle(color: Colors.white,),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
@@ -47,7 +50,7 @@ class LoginPage extends ConsumerWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
-                    } else if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+\$').hasMatch(value)) {
+                    } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$').hasMatch(value)) {
                       return 'Please enter a valid email';
                     }
                     return null;
@@ -55,8 +58,11 @@ class LoginPage extends ConsumerWidget {
                 ),
                 SizedBox(height: 20.h),
                 TextFormField(
+                  style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: "Password",
+                    hintStyle: TextStyle(color: Colors.white,),
+
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
@@ -65,7 +71,7 @@ class LoginPage extends ConsumerWidget {
                         isPasswordVisible ? Icons.visibility : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        // Toggle password visibility
+
                         ref.read(passwordVisibilityProvider.notifier).state = !isPasswordVisible;
                       },
                     ),
@@ -88,11 +94,13 @@ class LoginPage extends ConsumerWidget {
                     style: const TextStyle(color: Colors.red),
                   ),
                 ],
-                SizedBox(height: 16.h),
-                myButton(
+                 SizedBox(height: 20.h),
+                isLoading
+                    ? const CircularProgressIndicator()
+                    : myButton(
                   text: 'Login',
                   onTap: () => _login(context, ref),
-                  Color: Colors.blue,
+                  Color: Color(0xff007bc0),
                   textcolor: Colors.white,
                   height: 50.0.h,
                   width: 340.0.w,
@@ -101,7 +109,7 @@ class LoginPage extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an account?"),
+                     Text("Don't have an account?",style: TextStyle(color: Colors.white),),
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacement(
@@ -114,7 +122,8 @@ class LoginPage extends ConsumerWidget {
                       child: const Text("Signup"),
                     )
                   ],
-                )
+                ),
+                Image(image: AssetImage("assets/images/loginLogo.png"),height: 200.h,width: 200.w,)
               ],
             ),
           ),
@@ -152,7 +161,7 @@ class LoginPage extends ConsumerWidget {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Homescreen()), // Replace with actual NewsRoom page
+          MaterialPageRoute(builder: (context) => HomeScreen()), // Replace with actual NewsRoom page
         );
       }
     } on FirebaseAuthException catch (e) {

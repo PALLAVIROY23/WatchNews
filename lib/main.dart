@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';  // Import the screenutil package
 import 'package:newsroom/firebase_options.dart';
@@ -12,6 +13,15 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const ProviderScope(child: MyApp()));
+}
+Future<void> maiin() async {
+  // Ensure that Flutter is initialized
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Lock the app to portrait mode only
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 }
 
 class MyApp extends StatelessWidget {

@@ -31,7 +31,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       // User is logged in, navigate to NewsRoom
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Homescreen()),
+        MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     } else {
       // User is not logged in, navigate to LoginPage
